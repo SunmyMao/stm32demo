@@ -1,7 +1,7 @@
 #include "stm32f10x.h"
 #include "stm32f10x_conf.h"
 
-void LED_Init(void)
+void LED_init(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
@@ -24,14 +24,14 @@ void delay_x_ms(int x)
 /*
 int main(void)
 {
-	LED_Init();
-	delay_x_ms();
+	LED_init();
+	delay_x_ms(10000);
 	while(1)
 	{
 		GPIO_SetBits(GPIOC,GPIO_Pin_13);
-		delayXms();
+		delay_x_ms(10000);
 		GPIO_ResetBits(GPIOC,GPIO_Pin_13);
-		delay();
+		delay_x_ms(10000);
 	}
 }
 */
@@ -104,7 +104,7 @@ void backward(int speed)
 	GPIO_ResetBits(GPIOB,GPIO_Pin_7);
 	GPIO_ResetBits(GPIOB,GPIO_Pin_8);
 	delay_x_ms(speed);
-		
+
 	GPIO_SetBits(GPIOB,GPIO_Pin_5);
 	GPIO_ResetBits(GPIOB,GPIO_Pin_6);
 	GPIO_ResetBits(GPIOB,GPIO_Pin_7);
@@ -120,62 +120,36 @@ void stop(void)
 	GPIO_ResetBits(GPIOB,GPIO_Pin_8);
 }
 
+
 int main(void)
 {
 	int i = 0;
 	Engine_init();
+	LED_init();
 	delay_x_ms(225);
 	
 	while(1)
 	{
+		GPIO_ResetBits(GPIOC, GPIO_Pin_13);
 		for (i = 0; i < 250; i++)
 		{
 			forward(150);
 			delay_x_ms(225);
 		}
 		stop();
+		GPIO_SetBits(GPIOC, GPIO_Pin_13);
+
 		delay_x_ms(100000);
+		
+		GPIO_ResetBits(GPIOC, GPIO_Pin_13);
 		for (i = 0; i < 250; i++)
 		{
 			backward(150);
 			delay_x_ms(225);
 		}
 		stop();
+
+		GPIO_SetBits(GPIOC, GPIO_Pin_13);
 		delay_x_ms(100000);
 	}
 }
-
-/*
-int main(void)
-{
-	Engine_init();
-	delay_x_ms(225);
-	
-	while(1)
-	{
-		GPIO_ResetBits(GPIOB,GPIO_Pin_5);
-		GPIO_SetBits(GPIOB,GPIO_Pin_6);
-		GPIO_SetBits(GPIOB,GPIO_Pin_7);
-		GPIO_SetBits(GPIOB,GPIO_Pin_8);
-		delay_x_ms(225);
-		
-		GPIO_SetBits(GPIOB,GPIO_Pin_5);
-		GPIO_ResetBits(GPIOB,GPIO_Pin_6);
-		GPIO_SetBits(GPIOB,GPIO_Pin_7);
-		GPIO_SetBits(GPIOB,GPIO_Pin_8);
-		delay_x_ms(225);
-		
-		GPIO_SetBits(GPIOB,GPIO_Pin_5);
-		GPIO_SetBits(GPIOB,GPIO_Pin_6);
-		GPIO_ResetBits(GPIOB,GPIO_Pin_7);
-		GPIO_SetBits(GPIOB,GPIO_Pin_8);
-		delay_x_ms(225);
-		
-		GPIO_SetBits(GPIOB,GPIO_Pin_5);
-		GPIO_SetBits(GPIOB,GPIO_Pin_6);
-		GPIO_SetBits(GPIOB,GPIO_Pin_7);
-		GPIO_ResetBits(GPIOB,GPIO_Pin_8);
-		delay_x_ms(225);
-	}
-}
-*/
