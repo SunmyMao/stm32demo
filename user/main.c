@@ -1,6 +1,7 @@
 #include "stm32f10x.h"
 #include "stm32f10x_conf.h"
 #include "steering_engine.h"
+#include "uart.h"
 
 void LED_init(void)
 {
@@ -13,6 +14,7 @@ void LED_init(void)
 }
 
 // led
+/*
 int main(void)
 {
 	LED_init();
@@ -25,7 +27,22 @@ int main(void)
 		delay_x_ms(100000);
 	}
 }
+*/
+int main(void)
+{
+	u8 i;
+	u8 s[] = "Hello\r\n";
+	USART1_config();
+	while(1)
+	{
+		for(i=0; i<sizeof(s)/sizeof(s[0]); i++)
+		{
+			USART_SendData(USART1, s[i]);
+		}
+		// USART_ReceiveData(USART1);
+	}
 
+}
 
 /*******************
 IN1(A) ---- PB5
