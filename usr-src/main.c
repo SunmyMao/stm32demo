@@ -1,5 +1,6 @@
 #include "stm32f10x.h"
 #include "stm32f10x_conf.h"
+#include "steering_engine.h"
 
 void LED_init(void)
 {
@@ -9,15 +10,6 @@ void LED_init(void)
 	GPIO_InitStructure.GPIO_Mode=GPIO_Mode_Out_PP;
 	GPIO_InitStructure.GPIO_Speed=GPIO_Speed_50MHz;
 	GPIO_Init(GPIOC, &GPIO_InitStructure);
-}
-
-void delay_x_ms(int x)
-{
-	int i,j;
-	for(i=0; i < x; i++)
-	{
-		for(j=0; j < 112; j++);
-	}
 }
 
 // led
@@ -47,108 +39,33 @@ IN4(D) ---- PB8
 //正转 电机导通相序 D-C-B-A
 //反转 电机导通相序 A-B-C-D
 
-void Engine_init(void)
-{
-	GPIO_InitTypeDef GPIO_InitStructure;
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
-	GPIO_ResetBits(GPIOB, GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8);
-}
-
-void forward(int speed)
-{
-	GPIO_SetBits(GPIOB,GPIO_Pin_5);
-	GPIO_ResetBits(GPIOB,GPIO_Pin_6);
-	GPIO_ResetBits(GPIOB,GPIO_Pin_7);
-	GPIO_ResetBits(GPIOB,GPIO_Pin_8);
-	delay_x_ms(speed);
-	
-	GPIO_ResetBits(GPIOB,GPIO_Pin_5);
-	GPIO_SetBits(GPIOB,GPIO_Pin_6);
-	GPIO_ResetBits(GPIOB,GPIO_Pin_7);
-	GPIO_ResetBits(GPIOB,GPIO_Pin_8);
-	delay_x_ms(speed);
-	
-	GPIO_ResetBits(GPIOB,GPIO_Pin_5);
-	GPIO_ResetBits(GPIOB,GPIO_Pin_6);
-	GPIO_SetBits(GPIOB,GPIO_Pin_7);
-	GPIO_ResetBits(GPIOB,GPIO_Pin_8);
-	delay_x_ms(speed);
-		
-	GPIO_ResetBits(GPIOB,GPIO_Pin_5);
-	GPIO_ResetBits(GPIOB,GPIO_Pin_6);
-	GPIO_ResetBits(GPIOB,GPIO_Pin_7);
-	GPIO_SetBits(GPIOB,GPIO_Pin_8);
-	delay_x_ms(speed);
-}
-
-void backward(int speed)
-{
-	GPIO_ResetBits(GPIOB,GPIO_Pin_5);
-	GPIO_ResetBits(GPIOB,GPIO_Pin_6);
-	GPIO_ResetBits(GPIOB,GPIO_Pin_7);
-	GPIO_SetBits(GPIOB,GPIO_Pin_8);
-	delay_x_ms(speed);
-	
-	GPIO_ResetBits(GPIOB,GPIO_Pin_5);
-	GPIO_ResetBits(GPIOB,GPIO_Pin_6);
-	GPIO_SetBits(GPIOB,GPIO_Pin_7);
-	GPIO_ResetBits(GPIOB,GPIO_Pin_8);
-	delay_x_ms(speed);
-	
-	GPIO_ResetBits(GPIOB,GPIO_Pin_5);
-	GPIO_SetBits(GPIOB,GPIO_Pin_6);
-	GPIO_ResetBits(GPIOB,GPIO_Pin_7);
-	GPIO_ResetBits(GPIOB,GPIO_Pin_8);
-	delay_x_ms(speed);
-
-	GPIO_SetBits(GPIOB,GPIO_Pin_5);
-	GPIO_ResetBits(GPIOB,GPIO_Pin_6);
-	GPIO_ResetBits(GPIOB,GPIO_Pin_7);
-	GPIO_ResetBits(GPIOB,GPIO_Pin_8);
-	delay_x_ms(speed);
-}
-
-void stop(void)
-{
-	GPIO_ResetBits(GPIOB,GPIO_Pin_5);
-	GPIO_ResetBits(GPIOB,GPIO_Pin_6);
-	GPIO_ResetBits(GPIOB,GPIO_Pin_7);
-	GPIO_ResetBits(GPIOB,GPIO_Pin_8);
-}
-
-
 int main(void)
 {
 	int i = 0;
-	Engine_init();
+	StreeingEngine engine;
+	StreeingEngine_init(&engine, GPIOB, RCC_APB2Periph_GPIOB, GPIO_Pin_5, GPIO_Pin_6, GPIO_Pin_7, GPIO_Pin_8);
 	LED_init();
+	
 	delay_x_ms(225);
 	
 	while(1)
 	{
 		GPIO_ResetBits(GPIOC, GPIO_Pin_13);
-		for (i = 0; i < 250; i++)
+		for (i = 0; i < 64 * 64 / 8; i++)
 		{
-			forward(150);
+			StreeingEngine_clockwise(&engine, 150);
 			delay_x_ms(225);
 		}
-		stop();
+		StreeingEngine_stop(&engine);
 		GPIO_SetBits(GPIOC, GPIO_Pin_13);
-
 		delay_x_ms(100000);
-		
 		GPIO_ResetBits(GPIOC, GPIO_Pin_13);
-		for (i = 0; i < 250; i++)
+		for (i = 0; i < 64 * 64 / 8; i++)
 		{
-			backward(150);
+			StreeingEngine_counterClockwise(&engine, 150);
 			delay_x_ms(225);
 		}
-		stop();
-
+		StreeingEngine_stop(&engine);
 		GPIO_SetBits(GPIOC, GPIO_Pin_13);
 		delay_x_ms(100000);
 	}
