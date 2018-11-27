@@ -13,7 +13,6 @@ void LED_init(void)
 }
 
 // led
-/*
 int main(void)
 {
 	LED_init();
@@ -21,12 +20,12 @@ int main(void)
 	while(1)
 	{
 		GPIO_SetBits(GPIOC,GPIO_Pin_13);
-		delay_x_ms(10000);
+		delay_x_ms(100000);
 		GPIO_ResetBits(GPIOC,GPIO_Pin_13);
-		delay_x_ms(10000);
+		delay_x_ms(100000);
 	}
 }
-*/
+
 
 /*******************
 IN1(A) ---- PB5
@@ -38,7 +37,7 @@ IN4(D) ---- PB8
 *********************/
 //正转 电机导通相序 D-C-B-A
 //反转 电机导通相序 A-B-C-D
-
+/*
 int main(void)
 {
 	int i = 0;
@@ -70,3 +69,4 @@ int main(void)
 		delay_x_ms(100000);
 	}
 }
+*/
