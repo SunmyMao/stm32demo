@@ -396,7 +396,7 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>Source Group 1</GroupName>
+          <GroupName>Source</GroupName>
           <Files>
             <File>
               <FileName>startup_stm32f10x_md.s</FileName>
