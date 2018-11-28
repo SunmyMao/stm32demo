@@ -31,15 +31,28 @@ int main(void)
 int main(void)
 {
 	u8 i;
-	u8 s[] = "Hello\r\n";
+	u8 on[] = "off\r\n";
+	u8 off[] = "on\r\n";
+	uint16_t order;
+	LED_init();
 	USART1_config();
 	while(1)
 	{
-		for(i=0; i<sizeof(s)/sizeof(s[0]); i++)
+		while(USART_GetFlagStatus(USART1, USART_FLAG_RXNE) != SET); // wait pc message
+		order = USART_ReceiveData(USART1);
+		if (order == 0)
 		{
-			USART_SendData(USART1, s[i]);
+			GPIO_SetBits(GPIOC, GPIO_Pin_13);
+			for (i = 0; i < sizeof(off)/sizeof(off[0]); i++)
+				USART_SendData(USART1, off[i]);
 		}
-		// USART_ReceiveData(USART1);
+		else
+		{
+			GPIO_ResetBits(GPIOC, GPIO_Pin_13);
+			for (i = 0; i < sizeof(on)/sizeof(on[0]); i++)
+				USART_SendData(USART1, on[i]);	
+		}
+		while(USART_GetFlagStatus(USART1, USART_FLAG_TC) != SET); // wait send data completely
 	}
 
 }
