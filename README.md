@@ -1,6 +1,4 @@
-stm32 学习笔记
-
-目前有 led 点灯代码和舵机控制代码
+﻿stm32 学习笔记
 
 硬件条件：
     STM32F103C8T6 最小系统控制板 (http://pan.baidu.com/s/1geHfIE3)
