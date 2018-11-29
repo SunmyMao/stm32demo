@@ -38,23 +38,31 @@ int main(void)
 	USART1_config();
 	while(1)
 	{
-		while(USART_GetFlagStatus(USART1, USART_FLAG_RXNE) != SET); // wait pc message
-		order = USART_ReceiveData(USART1);
+		// receive code snippet
+		{
+			while(USART_GetFlagStatus(USART1, USART_FLAG_RXNE) != SET);
+			order = USART_ReceiveData(USART1);
+		}
 		if (order == 0)
 		{
 			GPIO_SetBits(GPIOC, GPIO_Pin_13);
-			USART_ClearFlag(USART1, USART_FLAG_TC);
+			// USART_ClearFlag(USART1, USART_FLAG_TC);
 			for (i = 0; i < sizeof(off)/sizeof(off[0]); i++)
+			{
 				USART_SendData(USART1, off[i]);
+				while(USART_GetFlagStatus(USART1, USART_FLAG_TC) != SET); // wait send data completely
+			}
 		}
 		else
 		{
 			GPIO_ResetBits(GPIOC, GPIO_Pin_13);
-			USART_ClearFlag(USART1, USART_FLAG_TC);
+			// USART_ClearFlag(USART1, USART_FLAG_TC);
 			for (i = 0; i < sizeof(on)/sizeof(on[0]); i++)
+			{
 				USART_SendData(USART1, on[i]);
+				while(USART_GetFlagStatus(USART1, USART_FLAG_TC) != SET); // wait send data completely
+			}
 		}
-		while(USART_GetFlagStatus(USART1, USART_FLAG_TC) != SET); // wait send data completely
 	}
 
 }
