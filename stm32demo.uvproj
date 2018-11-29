@@ -357,7 +357,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_MD USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>.\STM32F10x_StdPeriph_Driver\inc;.\usr-src</IncludePath>
+              <IncludePath>.\STM32F10x_StdPeriph_Driver\inc;.\user;.\device;.\startup</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -396,22 +396,22 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>Source</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
               <FileName>startup_stm32f10x_md.s</FileName>
               <FileType>2</FileType>
-              <FilePath>.\startup_stm32f10x_md.s</FilePath>
+              <FilePath>.\startup\startup_stm32f10x_md.s</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>system-lib</GroupName>
+          <GroupName>lib</GroupName>
           <Files>
             <File>
               <FileName>stm32f10x_conf.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\usr-src\stm32f10x_conf.h</FilePath>
+              <FilePath>.\device\stm32f10x_conf.h</FilePath>
             </File>
             <File>
               <FileName>stm32f10x_rcc.c</FileName>
@@ -426,27 +426,47 @@
             <File>
               <FileName>system_stm32f10x.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\usr-src\system_stm32f10x.c</FilePath>
+              <FilePath>.\device\system_stm32f10x.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32F10x_StdPeriph_Driver\src\stm32f10x_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>usr-src</GroupName>
+          <GroupName>user</GroupName>
           <Files>
-            <File>
-              <FileName>steering_engine.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\usr-src\steering_engine.h</FilePath>
-            </File>
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\usr-src\main.c</FilePath>
+              <FilePath>.\user\main.c</FilePath>
             </File>
             <File>
               <FileName>steering_engine.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\usr-src\steering_engine.c</FilePath>
+              <FilePath>.\user\steering_engine.c</FilePath>
+            </File>
+            <File>
+              <FileName>steering_engine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\user\steering_engine.h</FilePath>
+            </File>
+            <File>
+              <FileName>uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\user\uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\user\uart.h</FilePath>
             </File>
           </Files>
         </Group>

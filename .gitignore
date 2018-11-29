@@ -5,3 +5,5 @@
 /JLinkLog.txt
 /*.dep
 /*.map
+/*.lst
+/*.uvopt

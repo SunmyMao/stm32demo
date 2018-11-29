@@ -1,6 +1,7 @@
 #include "stm32f10x.h"
 #include "stm32f10x_conf.h"
 #include "steering_engine.h"
+#include "uart.h"
 
 void LED_init(void)
 {
@@ -21,12 +22,40 @@ int main(void)
 	while(1)
 	{
 		GPIO_SetBits(GPIOC,GPIO_Pin_13);
-		delay_x_ms(10000);
+		delay_x_ms(100000);
 		GPIO_ResetBits(GPIOC,GPIO_Pin_13);
-		delay_x_ms(10000);
+		delay_x_ms(100000);
 	}
 }
 */
+int main(void)
+{
+	u8 i;
+	u8 on[] = "off\r\n";
+	u8 off[] = "on\r\n";
+	uint16_t order;
+	LED_init();
+	USART1_config();
+	while(1)
+	{
+		while(USART_GetFlagStatus(USART1, USART_FLAG_RXNE) != SET); // wait pc message
+		order = USART_ReceiveData(USART1);
+		if (order == 0)
+		{
+			GPIO_SetBits(GPIOC, GPIO_Pin_13);
+			for (i = 0; i < sizeof(off)/sizeof(off[0]); i++)
+				USART_SendData(USART1, off[i]);
+		}
+		else
+		{
+			GPIO_ResetBits(GPIOC, GPIO_Pin_13);
+			for (i = 0; i < sizeof(on)/sizeof(on[0]); i++)
+				USART_SendData(USART1, on[i]);	
+		}
+		while(USART_GetFlagStatus(USART1, USART_FLAG_TC) != SET); // wait send data completely
+	}
+
+}
 
 /*******************
 IN1(A) ---- PB5
@@ -38,7 +67,7 @@ IN4(D) ---- PB8
 *********************/
 //正转 电机导通相序 D-C-B-A
 //反转 电机导通相序 A-B-C-D
-
+/*
 int main(void)
 {
 	int i = 0;
@@ -70,3 +99,4 @@ int main(void)
 		delay_x_ms(100000);
 	}
 }
+*/
