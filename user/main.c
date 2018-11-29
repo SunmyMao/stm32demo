@@ -31,8 +31,8 @@ int main(void)
 int main(void)
 {
 	u8 i;
-	u8 on[] = "on\r\n";
-	u8 off[] = "off\r\n";
+	u8 on[] = "on";
+	u8 off[] = "off";
 	uint16_t order;
 	LED_init();
 	USART1_config();
@@ -43,14 +43,16 @@ int main(void)
 		if (order == 0)
 		{
 			GPIO_SetBits(GPIOC, GPIO_Pin_13);
+			USART_ClearFlag(USART1, USART_FLAG_TC);
 			for (i = 0; i < sizeof(off)/sizeof(off[0]); i++)
-				USART_SendData(USART1, on[i]);
+				USART_SendData(USART1, off[i]);
 		}
 		else
 		{
 			GPIO_ResetBits(GPIOC, GPIO_Pin_13);
+			USART_ClearFlag(USART1, USART_FLAG_TC);
 			for (i = 0; i < sizeof(on)/sizeof(on[0]); i++)
-				USART_SendData(USART1, off[i]);	
+				USART_SendData(USART1, on[i]);
 		}
 		while(USART_GetFlagStatus(USART1, USART_FLAG_TC) != SET); // wait send data completely
 	}
