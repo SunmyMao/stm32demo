@@ -28,6 +28,8 @@ int main(void)
 	}
 }
 */
+
+/*
 int main(void)
 {
 	u8 i;
@@ -66,7 +68,7 @@ int main(void)
 	}
 
 }
-
+*/
 /*******************
 IN1(A) ---- PB5
 IN2(B) ---- PB6
@@ -77,23 +79,23 @@ IN4(D) ---- PB8
 *********************/
 //正转 电机导通相序 D-C-B-A
 //反转 电机导通相序 A-B-C-D
-/*
+
 int main(void)
 {
 	int i = 0;
+	int speed = 160;
 	StreeingEngine engine;
 	StreeingEngine_init(&engine, GPIOB, RCC_APB2Periph_GPIOB, GPIO_Pin_5, GPIO_Pin_6, GPIO_Pin_7, GPIO_Pin_8);
 	LED_init();
 	
 	delay_x_ms(225);
-	
 	while(1)
 	{
 		GPIO_ResetBits(GPIOC, GPIO_Pin_13);
 		for (i = 0; i < 64 * 64 / 8; i++)
 		{
-			StreeingEngine_clockwise(&engine, 150);
-			delay_x_ms(225);
+			StreeingEngine_clockwise(&engine, speed);
+			delay_x_ms(speed + 10);
 		}
 		StreeingEngine_stop(&engine);
 		GPIO_SetBits(GPIOC, GPIO_Pin_13);
@@ -101,12 +103,11 @@ int main(void)
 		GPIO_ResetBits(GPIOC, GPIO_Pin_13);
 		for (i = 0; i < 64 * 64 / 8; i++)
 		{
-			StreeingEngine_counterClockwise(&engine, 150);
-			delay_x_ms(225);
+			StreeingEngine_counterClockwise(&engine, speed);
+			delay_x_ms(speed + 10);
 		}
 		StreeingEngine_stop(&engine);
 		GPIO_SetBits(GPIOC, GPIO_Pin_13);
 		delay_x_ms(100000);
 	}
 }
-*/

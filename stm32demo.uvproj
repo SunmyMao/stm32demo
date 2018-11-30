@@ -409,9 +409,14 @@
           <GroupName>lib</GroupName>
           <Files>
             <File>
-              <FileName>stm32f10x_conf.h</FileName>
+              <FileName>stm32f10x_rcc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\STM32F10x_StdPeriph_Driver\src\stm32f10x_rcc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_rcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\device\stm32f10x_conf.h</FilePath>
+              <FilePath>.\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h</FilePath>
             </File>
             <File>
               <FileName>stm32f10x_gpio.c</FileName>
@@ -427,6 +432,11 @@
               <FileName>stm32f10x_usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -464,9 +474,9 @@
           <GroupName>device</GroupName>
           <Files>
             <File>
-              <FileName>stm32f10x_rcc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\STM32F10x_StdPeriph_Driver\src\stm32f10x_rcc.c</FilePath>
+              <FileName>stm32f10x_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\device\stm32f10x_conf.h</FilePath>
             </File>
             <File>
               <FileName>system_stm32f10x.c</FileName>
