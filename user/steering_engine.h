@@ -20,6 +20,4 @@ void StreeingEngine_clockwise(StreeingEngine* o, int speed);
 void StreeingEngine_counterClockwise(StreeingEngine* o, int speed);
 void StreeingEngine_stop(StreeingEngine* o);
 
-void delay_x_ms(int x);
-
 #endif

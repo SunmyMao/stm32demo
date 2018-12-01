@@ -1,13 +1,5 @@
 #include "steering_engine.h"
-
-void delay_x_ms(int x)
-{
-	int i,j;
-	for(i=0; i < x; i++)
-	{
-		for(j=0; j < 112; j++);
-	}
-}
+#include "utils.h"
 
 void StreeingEngine_init(StreeingEngine* o, GPIO_TypeDef* GPIOx, uint32_t RCC_APB2Periph, uint16_t a, uint16_t b, uint16_t c, uint16_t d)
 {
@@ -31,25 +23,25 @@ void StreeingEngine_clockwise(StreeingEngine* o, int speed)
 	GPIO_ResetBits(o->gpio_x, o->gpio_pin_b);
 	GPIO_ResetBits(o->gpio_x, o->gpio_pin_c);
 	GPIO_ResetBits(o->gpio_x, o->gpio_pin_d);
-	delay_x_ms(speed);
+	delay_us(speed);
 	
 	GPIO_ResetBits(o->gpio_x, o->gpio_pin_a);
 	GPIO_SetBits(o->gpio_x, o->gpio_pin_b);
 	GPIO_ResetBits(o->gpio_x, o->gpio_pin_c);
 	GPIO_ResetBits(o->gpio_x, o->gpio_pin_d);
-	delay_x_ms(speed);
+	delay_us(speed);
 	
 	GPIO_ResetBits(o->gpio_x, o->gpio_pin_a);
 	GPIO_ResetBits(o->gpio_x, o->gpio_pin_b);
 	GPIO_SetBits(o->gpio_x, o->gpio_pin_c);
 	GPIO_ResetBits(o->gpio_x, o->gpio_pin_d);
-	delay_x_ms(speed);
+	delay_us(speed);
 		
 	GPIO_ResetBits(o->gpio_x, o->gpio_pin_a);
 	GPIO_ResetBits(o->gpio_x, o->gpio_pin_b);
 	GPIO_ResetBits(o->gpio_x, o->gpio_pin_c);
 	GPIO_SetBits(o->gpio_x, o->gpio_pin_d);
-	delay_x_ms(speed);
+	delay_us(speed);
 }
 
 void StreeingEngine_counterClockwise(StreeingEngine* o, int speed)
@@ -58,25 +50,25 @@ void StreeingEngine_counterClockwise(StreeingEngine* o, int speed)
 	GPIO_ResetBits(o->gpio_x, o->gpio_pin_b);
 	GPIO_ResetBits(o->gpio_x, o->gpio_pin_c);
 	GPIO_SetBits(o->gpio_x, o->gpio_pin_d);
-	delay_x_ms(speed);
+	delay_us(speed);
 	
 	GPIO_ResetBits(o->gpio_x, o->gpio_pin_a);
 	GPIO_ResetBits(o->gpio_x, o->gpio_pin_b);
 	GPIO_SetBits(o->gpio_x, o->gpio_pin_c);
 	GPIO_ResetBits(o->gpio_x, o->gpio_pin_d);
-	delay_x_ms(speed);
+	delay_us(speed);
 	
 	GPIO_ResetBits(o->gpio_x, o->gpio_pin_a);
 	GPIO_SetBits(o->gpio_x, o->gpio_pin_b);
 	GPIO_ResetBits(o->gpio_x, o->gpio_pin_c);
 	GPIO_ResetBits(o->gpio_x, o->gpio_pin_d);
-	delay_x_ms(speed);
+	delay_us(speed);
 
 	GPIO_SetBits(o->gpio_x, o->gpio_pin_a);
 	GPIO_ResetBits(o->gpio_x, o->gpio_pin_b);
 	GPIO_ResetBits(o->gpio_x, o->gpio_pin_c);
 	GPIO_ResetBits(o->gpio_x, o->gpio_pin_d);
-	delay_x_ms(speed);
+	delay_us(speed);
 }
 
 void StreeingEngine_stop(StreeingEngine* o)

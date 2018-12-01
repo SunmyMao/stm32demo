@@ -468,6 +468,16 @@
               <FileType>5</FileType>
               <FilePath>.\user\uart.h</FilePath>
             </File>
+            <File>
+              <FileName>utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\user\utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\user\utils.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
